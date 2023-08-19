@@ -1,25 +1,27 @@
-;;; init.el --- Load the full configuration
+;;; init.el --- -*- coding: utf-8; lexical-binding: t; -*-
 
-;;; Commentary:
+;;; Commentry:
 
 ;;; Code:
 
-;; don't GC during startup to save time 
+
+(setq user-init-file (or load-file-name (buffer-file-name)))
+(setq user-emacs-directory (file-name-directory user-init-file))
+
+;; don't GC during startup to save time
 (unless (bound-and-true-p my-computer-has-smaller-memory-p)
   (setq gc-cons-percentage 0.6)
   (setq gc-cons-threshold most-positive-fixnum))
 
-(add-to-list 'load-path (expand-file-name "lisp"))
+(defconst my-emacs-d (file-name-as-directory user-emacs-directory)
+  "Directory of emacs.d.")
 
-(setq custom-file (locate-user-emacs-file "custom.el"))
+(defconst my-lisp-dir (concat my-emacs-d "lisp")
+  "Directory of personal configuration.")
 
-(require 'init-elpa)
-(require 'init-keymaps)
-(require 'init-company)
+;; Light weight mode, fewer packages are used.
+(setq my-lightweight-mode-p (and (boundp 'startup-now) (eq startup-now t)))
 
-(when (file-exists-p custom-file) 
-  (load custom-file))
-
-(provide 'init)
-
-;;; init.el ends here
+;;; Local Variables:
+;;; no-byte-compile: t
+;;; End:
