@@ -4,9 +4,14 @@
 
 ;;; Code:
 
+(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+
+(setq custom-file (locate-user-emacs-file "custom.el"))
 
 (setq user-init-file (or load-file-name (buffer-file-name)))
 (setq user-emacs-directory (file-name-directory user-init-file))
+
+(require 'init-elpa)
 
 ;; don't GC during startup to save time
 (unless (bound-and-true-p my-computer-has-smaller-memory-p)
@@ -21,6 +26,9 @@
 
 ;; Light weight mode, fewer packages are used.
 (setq my-lightweight-mode-p (and (boundp 'startup-now) (eq startup-now t)))
+
+(when (file-exists-p custom-file)
+  (load custom-file))
 
 ;;; Local Variables:
 ;;; no-byte-compile: t
