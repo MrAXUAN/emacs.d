@@ -11,12 +11,20 @@
 (setq user-init-file (or load-file-name (buffer-file-name)))
 (setq user-emacs-directory (file-name-directory user-init-file))
 
+;; enable lines numbers
+(global-display-line-numbers-mode t)
+
 (require 'init-elpa)
 
 ;; don't GC during startup to save time
 (unless (bound-and-true-p my-computer-has-smaller-memory-p)
   (setq gc-cons-percentage 0.6)
   (setq gc-cons-threshold most-positive-fixnum))
+
+(require 'init-eglot)
+(require 'init-yasnippet)
+(require 'init-company)
+(require 'init-treemacs)
 
 (defconst my-emacs-d (file-name-as-directory user-emacs-directory)
   "Directory of emacs.d.")
